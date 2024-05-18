@@ -2,20 +2,30 @@
 
 namespace Fhtechnikum\Uebung3;
 
+use Fhtechnikum\Uebung3\DTOs\CategoryDTO;
+
 class ProductTypeService
 {
     private array $categoryList;
 
     public function __construct(CategoriesRepository $repository){
-        $this->categoryList = $repository->getCategoriesModel()->categoryList;
+        $this->categoryList = $repository->getAllCategories();
     }
 
-    public function getCategoryResult(): DTOs\CategoryDTO{
-        $resultDTO = new DTOs\CategoryDTO();
-        $resultDTO->productType = //hier soll jetzt ein String her - naemlich das Ergebnis aus der Abfrage aus der Datenbank fuer das Produkt.
-        //Hie rmuss man irgendwas iterieren...;
+    /**
+     * @return array|DTOs\CategoryDTO[]
+     */
+    public function provideCategoryResult(): array{
+        $DTOList = [];
 
-        return $resultDTO;
+        foreach($this->categoryList as $category){
+            $resultDTO = new CategoryDTO();
+            $resultDTO->productType = $category['name'];
+            $resultDTO->url = "http://localhost/bb/Uebung3/index.php?resource=products&filter-type=".$category['id'];
+            $DTOList[] = $resultDTO;
+        }
+
+        return $DTOList;
     }
 
 }

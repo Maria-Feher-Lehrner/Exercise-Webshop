@@ -2,7 +2,7 @@
 
 namespace Fhtechnikum\Uebung3;
 
-use Fhtechnikum\Uebung3\models\CategoriesModel;
+use Fhtechnikum\Uebung3\models\CategoryModel;
 use PDO;
 
 class CategoriesRepository
@@ -13,17 +13,18 @@ class CategoriesRepository
         $this->database = $database;
     }
 
-    public function getCategoriesModel(): CategoriesModel
+    /**
+     * @return models\CategoryModel[]
+     * @return array
+     */
+    public function getAllCategories(): array
     {
-        $categoriesModel = new CategoriesModel();
-
         $query = "SELECT id, name FROM product_types ORDER BY name";
         $statement = $this->database->prepare($query);
 
         $statement->execute();
 
-        $categoriesModel->categoryList = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        return $categoriesModel;
     }
 }
