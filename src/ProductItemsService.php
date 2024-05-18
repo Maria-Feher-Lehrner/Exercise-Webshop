@@ -2,15 +2,30 @@
 
 namespace Fhtechnikum\Uebung3;
 
+use Fhtechnikum\Uebung3\DTOs\ProductDTO;
+
 class ProductItemsService
 {
-    private array $categories;
+    private array $productList;
 
-    public function __construct(CategoriesRepository $categoriesRepository){
-        $this->categories = $categoriesRepository->getAllCategories()->categoriesModel;
+    public function __construct(ProductsRepository $productsRepository){
+        $this->productList = $productsRepository->getProducts();
     }
 
-    public function provideItemsResult()
+    public function provideItemsResult(): ProductDTO
     {
+
     }
+
+    /**
+     * @return array
+     */
+    public function buildItemsList(): array
+    {
+        $products = [];
+        for ($i = 0; $i < count($this->productList); $i++) {
+            //Hier weitermachen: zweidimensionales Array? bauen aus Produktliste
+        }
+    }
+
 }
