@@ -2,7 +2,7 @@
 
 namespace Fhtechnikum\Uebung3;
 
-use Fhtechnikum\Uebung3\DTOs\ProductDTO;
+use Fhtechnikum\Uebung3\DTOs\ProductsDTO;
 
 class ProductItemsService
 {
@@ -12,9 +12,15 @@ class ProductItemsService
         $this->productList = $productsRepository->getProducts();
     }
 
-    public function provideItemsResult(): ProductDTO
+    public function provideItemsResult(): ProductsDTO
     {
+        $DTO = new ProductsDTO();
 
+        $DTO->productType = $this->productList[0]["productTypeName"];
+        $DTO->products = $this->buildItemsList();
+        $DTO->url = "http://localhost/bb/Uebung3/index.php?resource=products";
+
+        return $DTO;
     }
 
     /**
@@ -23,9 +29,11 @@ class ProductItemsService
     public function buildItemsList(): array
     {
         $products = [];
-        for ($i = 0; $i < count($this->productList); $i++) {
-            //Hier weitermachen: zweidimensionales Array? bauen aus Produktliste
+        foreach ($this->productList as $product) {
+            $products[] = ['name' => $product['productName']];
         }
+        return $products;
     }
 
 }
+

@@ -4,7 +4,7 @@ namespace Fhtechnikum\Uebung3;
 
 use Fhtechnikum\Uebung3\DTOs\CategoryDTO;
 
-class ProductTypeService
+class CategoriesService
 {
     private array $categoryList;
 

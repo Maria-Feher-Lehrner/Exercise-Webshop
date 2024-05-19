@@ -2,7 +2,7 @@
 
 namespace Fhtechnikum\Uebung3\DTOs;
 
-class ProductDTO
+class ProductsDTO
 {
     public string $productType;
     public array $products;
