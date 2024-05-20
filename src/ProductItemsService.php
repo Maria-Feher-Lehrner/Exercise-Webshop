@@ -18,7 +18,7 @@ class ProductItemsService
 
         $DTO->productType = $this->productList[0]["productTypeName"];
         $DTO->products = $this->buildItemsList();
-        $DTO->url = "http://localhost/bb/Uebung3/index.php?resource=products";
+        $DTO->url = "http://localhost/bb/Uebung3/index.php?resource=types";
 
         return $DTO;
     }
