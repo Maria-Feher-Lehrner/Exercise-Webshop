@@ -26,7 +26,27 @@ public function getProducts(): array
     $statement = $this->database->prepare($query);
     $statement->bindParam(":id", $this->typeId);
     $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_ASSOC);
+    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    //starting here: handling of empty results
+    if(empty($results) || $results[0]['productName'] === null){
+        $productTypeQuery = "SELECT name AS productTypeName FROM product_types WHERE id = :id";
+        $productTypeStatement = $this->database->prepare($productTypeQuery);
+        $productTypeStatement->bindParam(":id", $this->typeId);
+        $productTypeStatement->execute();
+        $productType = $productTypeStatement->fetch(PDO::FETCH_ASSOC);
+
+        if($productType) {
+            return[
+                [
+                    'productTypeName' => $productType['productTypeName'],
+                    'productName' => null,
+                ]
+            ];
+        }
+        return [];
+    }
+        return $results;
 }
 
 }

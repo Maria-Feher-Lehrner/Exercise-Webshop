@@ -8,7 +8,8 @@ class ProductItemsService
 {
     private array $productList;
 
-    public function __construct(ProductsRepository $productsRepository){
+    public function __construct(ProductsRepository $productsRepository)
+    {
         $this->productList = $productsRepository->getProducts();
     }
 
@@ -30,7 +31,9 @@ class ProductItemsService
     {
         $products = [];
         foreach ($this->productList as $product) {
-            $products[] = ['name' => $product['productName']];
+            if ($product['productName'] !== null) {
+                $products[] = ['name' => $product['productName']];
+            }
         }
         return $products;
     }
